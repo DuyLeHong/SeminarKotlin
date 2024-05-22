@@ -51,34 +51,61 @@ FAB click action here */ }) {
     @Preview
     @Composable
     fun NoteApp(paddingValues: PaddingValues? = null) {
-        val notes = listOf("Note 1", "Note 2", "Note 3", "Note 4",
-            "Note 5")
+//        val notes = listOf("Note 1", "Note 2", "Note 3", "Note 4",
+//            "Note 5")
+
+        val listSinhvien = mutableListOf<StudentModel>() // goi class java tu kotlin jetpack compose
+
+        listSinhvien.add(StudentModel("PH11322", "Long Nguyen", 8.5f, false))
+        listSinhvien.add(StudentModel("PH13542", "Tuan Le", 7.5f, false))
+        listSinhvien.add(StudentModel("PH17731", "Duy Le", 8f, false))
+        listSinhvien.add(StudentModel("PH11322", "Thao Tran", 9f, true))
+
         Column(modifier =
-        Modifier.padding(paddingValues!!).padding(8.dp)) {
-            notes.forEach { note ->
-                NoteCard(noteText = note)
+        Modifier
+            .padding(paddingValues!!)
+            .padding(8.dp)) {
+            Text(text = "Quan ly Sinh vien",
+                style = MaterialTheme.typography.titleLarge)
+            listSinhvien.forEach { sinhvien ->
+                NoteCard(sinhvien)
             }
         }
     }
 
     @Composable
-    fun NoteCard(noteText: String) {
+    fun NoteCard(studentModel: StudentModel) {
         Box(
-            modifier = Modifier.fillMaxWidth().padding(8.dp)
-                .background(color = Color.LightGray, shape =
-                MaterialTheme.shapes.medium)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .background(
+                    color = Color.LightGray, shape =
+                    MaterialTheme.shapes.medium
+                )
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = noteText,
-                    modifier = Modifier.weight(1f).padding(16.dp),
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                Column (modifier = Modifier
+                    .weight(1f)
+                    .padding(16.dp)
+                ) {
+                    Text(
+                        text = "${studentModel.mssv} - ${studentModel.hoten}",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Text(
+                        text = "Diem TB: ${studentModel.diemTB}",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+
                 Icon(
                     imageVector = Icons.Filled.KeyboardArrowDown,
                     contentDescription = "Expand Note",
                     modifier =
-                    Modifier.padding(16.dp).align(Alignment.CenterVertically)
+                    Modifier
+                        .padding(16.dp)
+                        .align(Alignment.CenterVertically)
                 )
             }
         }
